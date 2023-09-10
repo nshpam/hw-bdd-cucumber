@@ -178,7 +178,15 @@ end
 
 Then /^(?:|I )should be on (.+)$/ do |page_name|
   current_path = URI.parse(current_url).path
-  assert_equal path_to(page_name), current_path
+  test_path = path_to(page_name)
+
+  # assert_equal path_to(page_name), current_path
+  if test_path == current_path
+    # The current path matches the expected path, no error
+  else
+    raise "Expected path '#{test_path}' but got '#{current_path}'"
+  end
+
 end
 
 Then /^(?:|I )should have the following query string:$/ do |expected_pairs|
